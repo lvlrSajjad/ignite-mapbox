@@ -1,7 +1,7 @@
 {
   "name": "ignite-mapbox",
   "description": "Ignite plugin that adds react-native-mapbox support.",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "license": "MIT",
   "files": [
     "commands",

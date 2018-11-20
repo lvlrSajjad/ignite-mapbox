@@ -7,13 +7,17 @@ const NPM_MODULE_VERSION = '6.1.3'
 const APP_PATH = process.cwd()
 const EXAMPLE_FILE = 'MapsExample.js.ejs'
 
-const GRADLE_CONFIG = `
-    implementation (project(':mapbox-react-native-mapbox-gl')) {
+const GRADLE_CONFIG = `implementation (project(':mapbox-react-native-mapbox-gl')) {
         implementation('com.squareup.okhttp3:okhttp:3.6.0') {
             force = true
         }
-    }
-`
+    }`
+
+const WRONG_SETTINGS_CONFIG = `include ':@mapbox_react-native-mapbox-gl'
+project(':@mapbox_react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/@mapbox/react-native-mapbox-gl/android/rctmgl')`
+
+const CORRECT_SETTINGS_CONFIG = `include ':mapbox-react-native-mapbox-gl'
+project(':mapbox-react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/@mapbox/react-native-mapbox-gl/android/rctmgl')`
 
 const add = async function (context) {
   const { ignite, print } = context
@@ -21,12 +25,17 @@ const add = async function (context) {
   // install a npm module and link it
   await ignite.addModule(NPM_MODULE_NAME, { version: NPM_MODULE_VERSION, link: true })
   // add our component example to the plugin component examples screen
-  await ignite.addPluginComponentExample(EXAMPLE_FILE, { title: 'Maps Example' })
+ // await ignite.addPluginComponentExample(EXAMPLE_FILE, { title: 'Maps Example' })
 
   // add the app build gradle config
   ignite.patchInFile(`${APP_PATH}/android/app/build.gradle`, {
     insert: GRADLE_CONFIG,
-    replace: `\n    compile project(':mapbox-react-native-mapbox-gl')`
+    replace: `\n    compile project(':@mapbox_react-native-mapbox-gl')`
+  })
+
+  ignite.patchInFile(`${APP_PATH}/android/settings.gradle`, {
+    insert: CORRECT_SETTINGS_CONFIG,
+    replace: WRONG_SETTINGS_CONFIG
   })
 
   print.info('done')
@@ -63,6 +72,10 @@ const remove = async function (context) {
   // Remove the app build gradle config we added
   ignite.patchInFile(`${APP_PATH}/android/app/build.gradle`, {
     delete: GRADLE_CONFIG
+  })
+
+  ignite.patchInFile(`${APP_PATH}/android/settings.gradle`, {
+    delete: CORRECT_SETTINGS_CONFIG
   })
 
   // TODO: Remove API key
