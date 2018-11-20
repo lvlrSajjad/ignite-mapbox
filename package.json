@@ -25,8 +25,8 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "url": "https://github.com/infinitered/ignite-maps",
-  "repository": "infinitered/ignite-maps",
+  "url": "https://github.com/lvlrSajjad/ignite-mapbox",
+  "repository": "lvlrSajjad/ignite-mapbox",
   "devDependencies": {
     "ava": "^0.18.2",
     "babel-eslint": "^7.1.1",
