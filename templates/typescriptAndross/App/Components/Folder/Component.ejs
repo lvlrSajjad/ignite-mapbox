@@ -1,0 +1,31 @@
+import * as React from 'react'
+import {Component} from 'react';
+import {View} from "react-native";
+import MapboxGL from '@mapbox/react-native-mapbox-gl';
+import MapboxConfig from "../../Config/MapboxConfig";
+import {ColorScheme} from "../../Themes/Colors";
+
+MapboxGL.setAccessToken(MapboxConfig.accessToken);
+
+interface <%= props.name %>ComponentProps {
+  isDarkMode?:boolean,
+  colorScheme:ColorScheme
+}
+
+export default class <%= props.name %>Component extends Component<<%= props.name %>ComponentProps> {
+  render() {
+    const ColorScheme = this.props.colorScheme;
+
+    return (
+      <View style={{flex:1}}>
+          <MapboxGL.MapView
+            styleURL={ColorScheme.mapStyleUrl}
+            zoomLevel={15}
+            centerCoordinate={[51.3890,35.6892]}
+            style={{flex:1}}
+           >
+          </MapboxGL.MapView>
+      </View>
+    );
+  }
+}

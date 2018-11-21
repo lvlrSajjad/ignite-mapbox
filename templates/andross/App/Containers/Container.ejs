@@ -1,0 +1,11 @@
+import {connect} from "react-redux";
+import <%= props.name %>Component from "../Components/<%= props.name %>/<%= props.name %>Component";
+
+const mapStateToProps = state => {
+  return {
+  };
+};
+
+//const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps,/** mapDispatchToProps*/ null)(<%= props.name %>Component);

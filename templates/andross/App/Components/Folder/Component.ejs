@@ -1,0 +1,23 @@
+import React,{Component} from 'react'
+import {View} from "react-native";
+import MapboxGL from '@mapbox/react-native-mapbox-gl';
+import MapboxConfig from "../../Config/MapboxConfig";
+
+MapboxGL.setAccessToken(MapboxConfig.accessToken);
+
+export default class <%= props.name %>Component extends Component {
+  render() {
+
+    return (
+      <View style={{flex:1}}>
+          <MapboxGL.MapView
+            styleURL={'mapbox://styles/mapbox/light-v9'}
+            zoomLevel={15}
+            centerCoordinate={[51.3890,35.6892]}
+            style={{flex:1}}
+           >
+          </MapboxGL.MapView>
+      </View>
+    );
+  }
+}
